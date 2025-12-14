@@ -1,6 +1,6 @@
 # Analysis Code for: ALK R1275Q mutation drives expansion of SCP-like cells during sympathoadrenal commitment and primes neuroblastoma initiation
 
-This repository contains the complete source code and computational pipelines used for the analysis presented in the manuscript by **Liu et al. (Nature Communications, 2024)**.
+This repository contains the complete source code and computational pipelines used for the analysis presented in the manuscript by **Liu et al.**.
 
 The analysis is divided into two main parts: 1. **Single-cell RNA-seq (scRNA-seq)**: Seurat-based analysis pipeline. 2. **Bulk RNA-seq**: DESeq2-based differential expression analysis.
 
