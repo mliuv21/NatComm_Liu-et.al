@@ -48,7 +48,7 @@ Note: For a full list of required packages, please refer to scRNA_seq.d/Load.R.
 # 🛠️ Installation Clone this repository:
 
 ``` bash
-git clone [https://github.com/](https://github.com/)[Your_Username]/[Your_Repo_Name].git
+git clone https://github.com/mliuv21/NatComm_Liu-et.al.git
 cd [Your_Repo_Name]
 ```
 
