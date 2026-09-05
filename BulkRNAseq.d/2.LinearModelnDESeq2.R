@@ -19,6 +19,8 @@ if (TRUE) {
   library(tidyverse)
   library(ggplot2)
   library(ggrepel)
+  library(ggpubr)
+  library(genefilter)
 }
 #### Data loading ####
 # Load the sample information 
@@ -53,15 +55,13 @@ ddsObj.raw <- DESeqDataSetFromTximport(txi = txi,
 keep <- rowSums(counts(ddsObj.raw)) > 5
 ddsObj.filt <- ddsObj.raw[keep,]
 
-'''
-## Three main step of DESeq2 to analysis
-  ddsObj <- estimateSizeFactors(ddsObj.filt)
-  
-  ddsObj <- estimateDispersions(ddsObj)
-  plotDispEsts(ddsObj)
-  
-  ddsObj <- nbinomWaldTest(ddsObj)
-'''
+# ## Three main step of DESeq2 to analysis
+# ddsObj <- estimateSizeFactors(ddsObj.filt)
+# 
+# ddsObj <- estimateDispersions(ddsObj)
+# plotDispEsts(ddsObj)
+# 
+# ddsObj <- nbinomWaldTest(ddsObj)
 ddsObj <- DESeq(ddsObj.filt)
 
 # Generate a result table
@@ -141,36 +141,34 @@ if (T) {
       legend.box.background = element_rect(fill='transparent')) ;pca
   
   ###
-  '''
-  pca <- ggplot(pca_dt) +
-    geom_arc_bar(
-      aes(
-        x0 = PC1, y0 = PC2,
-        r0 = 0, r = 1,
-        start = pi/2, end = 3*pi/2,
-        fill = Group), color = NA,alpha = 1) +
-    geom_arc_bar(
-      aes(
-        x0 = PC1, y0 = PC2,
-        r0 = 0, r = 1,
-        start = -pi/2, end = pi/2,
-        fill = Diff
-      ), color = NA,alpha = 0.6) +coord_fixed()+
-    scale_fill_manual(values=c("Ctrl"= "#4575B4","NB" = "#D73027", "NCC" = "#3D98D3FF",
-                               "SAP" = "#9C27B0FF",
-                               "D6"  = "#8F7289FF",
-                               "D8"  = "#4CAF50FF",
-                               "D10" = "#F49600FF",
-                               "D12" = "#C62828FF")) + 
-    xlab(paste0("PC1: ",percentVar[1],"% variance")) +
-    ylab(paste0("PC2: ",percentVar[2],"% variance")) + theme_minimal()+
-    theme(#panel.background = element_rect(fill='transparent', color="grey"),
-      plot.background = element_blank(),
-      panel.grid.minor = element_blank(),
-      legend.background = element_rect(fill='transparent'),
-      legend.box.background = element_rect(fill='transparent')) ;pca
-  
-  '''
+# Alternative PCA visualization retained for reference.
+# pca <- ggplot(pca_dt) +
+#   geom_arc_bar(
+#     aes(
+#       x0 = PC1, y0 = PC2,
+#       r0 = 0, r = 1,
+#       start = pi/2, end = 3*pi/2,
+#       fill = Group), color = NA,alpha = 1) +
+#   geom_arc_bar(
+#     aes(
+#       x0 = PC1, y0 = PC2,
+#       r0 = 0, r = 1,
+#       start = -pi/2, end = pi/2,
+#       fill = Diff
+#     ), color = NA,alpha = 0.6) +coord_fixed()+
+#   scale_fill_manual(values=c("Ctrl"= "#4575B4","NB" = "#D73027", "NCC" = "#3D98D3FF",
+#                              "SAP" = "#9C27B0FF",
+#                              "D6"  = "#8F7289FF",
+#                              "D8"  = "#4CAF50FF",
+#                              "D10" = "#F49600FF",
+#                              "D12" = "#C62828FF")) + 
+#   xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+#   ylab(paste0("PC2: ",percentVar[2],"% variance")) + theme_minimal()+
+#   theme(#panel.background = element_rect(fill='transparent', color="grey"),
+#     plot.background = element_blank(),
+#     panel.grid.minor = element_blank(),
+#     legend.background = element_rect(fill='transparent'),
+#     legend.box.background = element_rect(fill='transparent')) ;pca
   ###
   
   pc1.density <- ggplot(pca_dt) +
@@ -210,4 +208,3 @@ fig <-plotly::plot_ly(a, text = a$name, x = a$PC1, y = a$PC2, z=a$PC3,
 
 
 saveRDS(ddsObj,"2.ddsObj_diff-group.Rds")
-

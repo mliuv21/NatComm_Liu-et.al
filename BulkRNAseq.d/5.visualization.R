@@ -22,6 +22,11 @@ if (TRUE) {
   library(circlize)
   library(grid)
   library(RColorBrewer)
+  library(genefilter)
+  library(clusterProfiler)
+  library(org.Hs.eg.db)
+  library(enrichplot)
+  library(ggVennDiagram)
 }
 
 dds.diff_group <- readRDS("2.ddsObj_diff-group.Rds")
@@ -45,18 +50,18 @@ topVarGenes <- head(order(rowVars(gene),decreasing=TRUE),topgenenum)
 scaled_plotDat = t(scale(t(gene[topVarGenes,]), center = T, scale = T))
 
 # If you need show Symbol on your HM
-"""annt_scaled_plotDat <- annotations %>% 
-  dplyr::select(gene_id, gene_name) %>%
-  dplyr::filter(gene_id %in% rownames(scaled_plotDat))
-annt_scaled_plotDat <- as.data.frame(scaled_plotDat) %>%
-  rownames_to_column("gene_id") %>% 
-  left_join(annt_scaled_plotDat, "gene_id") %>%
-  rename(GeneID = gene_id, Symbol = gene_name) %>%
-  dplyr::select(!"GeneID") %>%
-  dplyr::filter(!is.na(Symbol)) 
-rownames(annt_scaled_plotDat) <- make.unique(annt_scaled_plotDat$Symbol)
-annt_scaled_plotDat %>% dplyr::select(!"Symbol") -> annt_scaled_plotDat
-dim(annt_scaled_plotDat)"""
+# annt_scaled_plotDat <- annotations %>% 
+#   dplyr::select(gene_id, gene_name) %>%
+#   dplyr::filter(gene_id %in% rownames(scaled_plotDat))
+# annt_scaled_plotDat <- as.data.frame(scaled_plotDat) %>%
+#   rownames_to_column("gene_id") %>% 
+#   left_join(annt_scaled_plotDat, "gene_id") %>%
+#   rename(GeneID = gene_id, Symbol = gene_name) %>%
+#   dplyr::select(!"GeneID") %>%
+#   dplyr::filter(!is.na(Symbol)) 
+# rownames(annt_scaled_plotDat) <- make.unique(annt_scaled_plotDat$Symbol)
+# annt_scaled_plotDat %>% dplyr::select(!"Symbol") -> annt_scaled_plotDat
+# dim(annt_scaled_plotDat)
 
 #Color Palette
 myPalette <- c("#4575B4", "#FFFFBF", "#D73027")
@@ -92,8 +97,8 @@ draw(hmap_tpm)
 dev.off()
 
 
-HM = draw(hmap)
-saveRDS(hmap, "./5.visualization_HM.Rds")
+HM = draw(hmap_tpm)
+saveRDS(hmap_tpm, "./5.visualization_HM.Rds")
 ############### HM Gene Extraction #############################
 # extract genes from clusters
 r.dend <- row_dend(HM)  #Extract row dendrogram
@@ -511,7 +516,6 @@ ggsave(paste0("./5.visualization.d/KEGG_enrichment_results_",change, "_", stage,
 }
 findunique(unique_genes = unique_genes_dw, "dw", "D12")
 findunique(unique_genes = unique_genes_dw, "dw", "SAP")
-
 
 
 

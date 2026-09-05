@@ -22,6 +22,8 @@ if (TRUE) {
   library(circlize)
   library(grid)
   library(RColorBrewer)
+  library(AnnotationHub)
+  library(ensembldb)
 }
 
 ################################# Batch analyze #########################
@@ -46,6 +48,8 @@ analysis <- function(dds, results, compare_name){
   library(ggplot2)
   library(ggrepel)
   library(ashr)
+  library(AnnotationHub)
+  library(ensembldb)
   
   ah <- AnnotationHub()
   hmEnsem <- ah[["AH109336"]]
@@ -238,4 +242,3 @@ results.NBvCtrl.NCC <- results(dds.diff_group,
 analysis(dds = dds.diff_group,
          results = results.NBvCtrl.NCC,
          compare_name = "NBvsCtrl_NCC")
-
