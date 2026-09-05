@@ -86,7 +86,7 @@ source("run_demo.R")
 
 Expected Output: Generates 3 UMAP plots in './demo_output/' verifying the installation. Run Time: \< 5 minutes.
 
-2.  Full Pipeline Reproduction Step 0 (Download Data): Download raw 10x Genomics data from GEO (Accession: GSE310952). Place the data in a folder named data_raw inside the scRNA_seq.d directory (or modify the path in script 0.).
+2.  Full Pipeline Reproduction Step 0 (Download Data): Raw sequencing data supporting this study are available as described in the Data Availability section of the published article; access is controlled and requires approval by the relevant Data Access Committee. Place the downloaded data in a folder named data_raw inside the scRNAseq.d directory (or modify the path in script 0.).
 
 Run Pipeline:
 
@@ -100,7 +100,7 @@ source("run_analysis_pipeline.R")
 
 # 🔬 Part 2: Bulk RNA-seq Analysis Located in the ./Bulk_RNA_seq.d/ folder.
 
-Note on Reproducibility: Raw sequencing data (FASTQ/Salmon output) is not included due to size constraints. However, we provide the pre-processed count matrix (1.txi.count.rds) to allow full reproduction starting from the differential expression step. Processed count matrices have been deposited in GEO under accession number **GSE310836**. For code reproducibility within this repository, we provide the R-compatible `1.txi.count.rds` file so Step 2 can be executed immediately.
+Note on Reproducibility: Raw sequencing data (FASTQ/Salmon output) are not included in this repository due to size and controlled-access restrictions; they can be obtained following the procedure described in the Data Availability section of the published article. The pre-processed count matrix (1.txi.count.rds) is provided here so Step 2 can be executed immediately.
 
 Instructions: Navigate to the folder:
 
