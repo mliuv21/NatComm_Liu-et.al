@@ -1,10 +1,8 @@
-'''
-Project Name: Modelling NB by using patient-derived PSCs
-Script Name: 0. Loading the data from Cell Ranger exported data
-Name: Mingzhi Liu
-Date: 2023-11-11
-(Modified for GitHub Submission)
-'''
+# Project Name: Modelling NB by using patient-derived PSCs
+# Script Name: 0. Loading the data from Cell Ranger exported data
+# Name: Mingzhi Liu
+# Date: 2023-11-11
+# (Modified for GitHub Submission)
 
 #### Loading the data from 10x ####
 # rm(list = ls()) # Commented out for pipeline execution

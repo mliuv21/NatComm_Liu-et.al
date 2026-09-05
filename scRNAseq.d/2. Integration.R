@@ -58,27 +58,25 @@ DimPlot(ML_seurat, reduction = "pca", group.by = "orig.ident")
 ggsave(paste0(plot.path, "2.UMAP_before_integration_orig.png"), width = 20, height = 15, units = "cm")
 
 
-#### Integration (RPCA) ####
-features <- SelectIntegrationFeatures(object.list = list(Filter_seurat_NCC, Filter_seurat_SAP, Filter_seurat_D8, Filter_seurat_D12))
-
-# Prepare list for integration
+#### Integration (SCTransform-based standard workflow) ####
 obj_list <- list(Filter_seurat_NCC, Filter_seurat_SAP, Filter_seurat_D8, Filter_seurat_D12)
 obj_list <- lapply(obj_list, function(x) {
-  x <- NormalizeData(x)
-  x <- FindVariableFeatures(x, selection.method = "vst", nfeatures = 2000)
-  x <- ScaleData(x, features = features)
-  x <- RunPCA(x, features = features)
-  return(x)
+  x <- CellCycleScoring(x, s.features = cc.genes$s.genes, g2m.features = cc.genes$g2m.genes)
+  x <- SCTransform(x, vars.to.regress = c("percent.mt", "percent.ribo", "S.Score", "G2M.Score"), verbose = FALSE)
+  x
 })
 
-anchors <- FindIntegrationAnchors(object.list = obj_list, anchor.features = features, reduction = "rpca")
-ML_seurat_integrated <- IntegrateData(anchorset = anchors)
+features <- SelectIntegrationFeatures(object.list = obj_list, nfeatures = 3000)
+obj_list <- PrepSCTIntegration(object.list = obj_list, anchor.features = features)
+anchors <- FindIntegrationAnchors(object.list = obj_list, normalization.method = "SCT", anchor.features = features)
+ML_seurat_integrated <- IntegrateData(anchorset = anchors, normalization.method = "SCT")
 
 # Post-integration Processing
 DefaultAssay(ML_seurat_integrated) <- "integrated"
-ML_seurat_integrated <- ScaleData(ML_seurat_integrated, verbose = F)
-ML_seurat_integrated <- RunPCA(ML_seurat_integrated, npcs = 30, verbose = F)
-ML_seurat_integrated <- RunUMAP(ML_seurat_integrated, reduction = "pca", dims = 1:30, verbose = F)
+ML_seurat_integrated <- RunPCA(ML_seurat_integrated, npcs = 50, verbose = FALSE)
+ML_seurat_integrated <- RunUMAP(ML_seurat_integrated, reduction = "pca", dims = 1:22, verbose = FALSE)
+ML_seurat_integrated <- FindNeighbors(ML_seurat_integrated, dims = 1:22)
+ML_seurat_integrated <- FindClusters(ML_seurat_integrated, resolution = 0.2)
 
 # Save Plot
 p_final <- DimPlot(ML_seurat_integrated, reduction = "umap", group.by = "orig.ident")

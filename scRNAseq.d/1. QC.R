@@ -1,11 +1,9 @@
-'''
-Project Name: Modelling NB by using patient-derived PSCs
-Script Name: 1. QC.R
-Description: Quality Control using adaptive thresholds (MAD-based) and HTO demultiplexing.
-Name: Mingzhi Liu
-Date: 2023-11-11
-(Optimized for Publication/Reproduction)
-'''
+# Project Name: Modelling NB by using patient-derived PSCs
+# Script Name: 1. QC.R
+# Description: Quality Control using adaptive thresholds (MAD-based) and HTO demultiplexing.
+# Name: Mingzhi Liu
+# Date: 2023-11-11
+# (Optimized for Publication/Reproduction)
 
 # 1. Load Libraries
 # ------------------------------------------------------------------

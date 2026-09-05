@@ -23,10 +23,12 @@ if(T){
   library(ggpubr)
   library(clusterProfiler)
   #remotes::install_github("pwwang/scplotter")
-  options(reticulate.conda_binary = "/sw/apps/conda/latest/rackham_stage/bin/conda", SCP_env_name = "SCP_env")
+  # If needed for SCP, replace this with your local conda binary path.
+  # options(reticulate.conda_binary = "/path/to/conda", SCP_env_name = "SCP_env")
   
   library(SCP)
-  setwd("/cfs/klemming/projects/supr/naiss2023-23-118/private/minliu.d/10xscRNAseq.d/Filtered_count_analysis.d/FilterCountAnalysis/S_D_Final.d")
+  # Replace this with your working directory containing the intermediate objects below.
+  # setwd("your_working_directory")
 
 col <-  DiscretePalette_scCustomize(num_colors = 70, 
                                     palette = "varibow", 
@@ -55,6 +57,7 @@ SAP_cluster_col <- c('#A6CEE3','#1F78B4','#B2DF8A','#33A02C','#FDBF6F','#FF7F00'
 Cycle_col <- c("#66C2A5FF", "#FC8D62FF", "#8DA0CBFF")
 }
 
+# The following objects are intermediate outputs from the original analysis workflow.
 ML_seurat_Ctrl <- readRDS("./Ctrl.d/3.Embedding.d/Name.d/ML_seurat_normalized_withSCT_Name_C10_pub.RDS")
 
 ML_seurat_SAP <- readRDS("./All_Sample.d/ML_seurat_SAP_pub.RDS")
