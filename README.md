@@ -10,7 +10,7 @@ The analysis is divided into two main parts: 1. **Single-cell RNA-seq (scRNA-seq
 .
 ├── README.md                               # Overview and instructions
 ├── LICENSE                                 # MIT License
-├── scRNA_seq.d/                            # Single-cell analysis pipeline
+├── scRNAseq.d/                             # Single-cell analysis pipeline
 │   ├── run_analysis_pipeline.R             # Master script for full analysis (Steps 0-2)
 │   ├── run_demo.R                          # Script for quick environment validation
 │   ├── 0. Loading the data from Cell Ranger exported data.R
@@ -23,7 +23,7 @@ The analysis is divided into two main parts: 1. **Single-cell RNA-seq (scRNA-seq
 │   ├── demo_data_AllSample.rds             # (Demo Data)
 │   └── demo_data_SAP.rds                   # (Demo Data)
 │
-└── Bulk_RNA_seq.d/                         # Bulk RNA-seq analysis pipeline
+└── BulkRNAseq.d/                           # Bulk RNA-seq analysis pipeline
     ├── 1.DataPreparation.R                 # (Reference only)
     ├── 2.LinearModelnDESeq2.R              # Start here for reproduction
     ├── 3.annotation.R
@@ -49,7 +49,7 @@ Visualization: ggplot2, ggExtra, scCustomize, ComplexHeatmap, circlize, RColorBr
 
 Bulk RNA-seq: DESeq2, tximport, clusterProfiler.
 
-Note: For a full list of required packages, please refer to scRNA_seq.d/Load.R.
+Note: For a full list of required packages, please refer to scRNAseq.d/Load.R.
 
 # 🛠️ Installation Clone this repository:
 
@@ -60,7 +60,7 @@ git clone [https://github.com/](https://github.com/)[Your_Username]/[Your_Repo_N
 cd [Your_Repo_Name]
 ```
 
-**Install R Packages:** Open R and install the required dependencies. You can check scRNA_seq.d/Load.R for details.
+**Install R Packages:** Open R and install the required dependencies. You can check scRNAseq.d/Load.R for details.
 
 ``` r
     # Example installation commands
@@ -75,12 +75,12 @@ cd [Your_Repo_Name]
 
 Typical installation time: 30-60 minutes.
 
-# 🧬 Part 1: Single-Cell RNA-seq Analysis Located in the ./scRNA_seq.d/ folder.
+# 🧬 Part 1: Single-Cell RNA-seq Analysis Located in the ./scRNAseq.d/ folder.
 
 1.  Quick Demo (Validation) To verify the computational environment without downloading large raw datasets, we provide a Demo Suite using subsetted data.
 
 ``` r
-setwd("./scRNA_seq.d")
+setwd("./scRNAseq.d")
 source("run_demo.R")
 ```
 
@@ -91,21 +91,21 @@ Expected Output: Generates 3 UMAP plots in './demo_output/' verifying the instal
 Run Pipeline:
 
 ``` r
-setwd("./scRNA_seq.d")
+setwd("./scRNAseq.d")
 source("run_analysis_pipeline.R")
 # This executes Steps 0 (Loading), 1 (QC), and 2 (Integration).
 ```
 
 3.  Figure Generation Refer to the HTML reports (**3.SourceCode_Main_Figures.html** and **4.SourceCode_Supplementary_Figures.html**) for the exact R code chunks used to generate the manuscript figures.
 
-# 🔬 Part 2: Bulk RNA-seq Analysis Located in the ./Bulk_RNA_seq.d/ folder.
+# 🔬 Part 2: Bulk RNA-seq Analysis Located in the ./BulkRNAseq.d/ folder.
 
 Note on Reproducibility: Raw sequencing data (FASTQ/Salmon output) are not included in this repository due to size and controlled-access restrictions; they can be obtained following the procedure described in the Data Availability section of the published article. The pre-processed count matrix (1.txi.count.rds) is provided here so Step 2 can be executed immediately.
 
 Instructions: Navigate to the folder:
 
 ``` r
-setwd("../Bulk_RNA_seq.d")  # Or set absolute path to Bulk_RNA_seq
+setwd("../BulkRNAseq.d")  # Or set absolute path to BulkRNAseq.d
 ```
 
 Start from Step 2 (Differential Expression): Script 1.DataPreparation.R is provided for methodological transparency but should be skipped. Start the analysis by running Step 2, which loads the provided 1.txi.count.rds and SampleInfo.txt.
